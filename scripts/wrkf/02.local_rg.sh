@@ -122,5 +122,20 @@ script=scripts/bin/run_lava.R
 Rscript $script --input_info_file "$input_info_file" --sample_overlap_file "$sample_overlap_file" --ref_bfile "$ref_bfile" \
     --loci_file "$loci_file" --threads $threads --out_prefix "$out_prefix" > $log 2>&1 &
 
+## plot local rg
+sig_local_rg_file=${lava_outputs_dir}/02.HT_BMR_local_rg.sig_bivar.tsv
+title='Distribution of local rg across the genome'
+unit_mm=TRUE
+width=190
+height=180
+rg_heatmap_file=${lava_outputs_dir}/03.local_rg_heatmap.pdf
+log=${log_dir}/plot_genomic_heatmap_of_local_rg.log
+
+script=scripts/bin/plot_local_rg.R
+export PATH=/path/to/miniforge3/envs/r4.3/bin/:$PATH
+Rscript $script --sig_local_rg_file $sig_local_rg_file \
+    --title "$title" --unit_mm $unit_mm --width $width --height $height \
+    --out_file $rg_heatmap_file > $log 2>&1 &
+
 
 
